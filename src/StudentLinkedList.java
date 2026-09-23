@@ -122,6 +122,86 @@ public class StudentLinkedList {
     }
 
     // ---------------------------------------------------------------
+    // Update
+    // ---------------------------------------------------------------
+
+    /**
+     * Finds the student by ID and replaces name, programme and marks.
+     * The ID itself is not changed because it is the unique key.
+     */
+    public boolean updateStudent(String studentId, String name, String programme, double marks) {
+        Student student = searchStudent(studentId);
+        if (student == null) {
+            System.out.println("Error: Student with ID " + studentId + " not found.");
+            return false;
+        }
+
+        String error = validateDetails(name, programme, marks);
+        if (error != null) {
+            System.out.println("Error: " + error);
+            return false;
+        }
+
+        student.setName(name.trim());
+        student.setProgramme(programme.trim());
+        student.setMarks(marks);
+        System.out.println("Student " + student.getStudentId() + " updated successfully.");
+        return true;
+    }
+
+    // ---------------------------------------------------------------
+    // Delete
+    // ---------------------------------------------------------------
+
+    /**
+     * Removes the student with the given ID and returns it
+     * (so it can be pushed onto the undo/history stack).
+     *
+     * Case 1: node to delete is the head -> move head to head.next
+     * Case 2: node is in the middle/end  -> keep a "previous" pointer and
+     *         link previous.next to current.next (skipping the node)
+     *
+     * Returns null if the ID was not found.
+     */
+    public Student deleteStudent(String studentId) {
+        if (isEmpty()) {
+            System.out.println("Error: The list is empty. Nothing to delete.");
+            return null;
+        }
+        if (studentId == null) {
+            System.out.println("Error: Student ID cannot be empty.");
+            return null;
+        }
+        String id = studentId.trim();
+
+        // Case 1: delete the head node
+        if (head.data.getStudentId().equalsIgnoreCase(id)) {
+            Student removed = head.data;
+            head = head.next;
+            size--;
+            System.out.println("Student " + removed.getStudentId() + " deleted successfully.");
+            return removed;
+        }
+
+        // Case 2: search the rest of the list, remembering the previous node
+        Node previous = head;
+        Node current = head.next;
+        while (current != null) {
+            if (current.data.getStudentId().equalsIgnoreCase(id)) {
+                previous.next = current.next;   // unlink the node
+                size--;
+                System.out.println("Student " + current.data.getStudentId() + " deleted successfully.");
+                return current.data;
+            }
+            previous = current;
+            current = current.next;
+        }
+
+        System.out.println("Error: Student with ID " + id + " not found.");
+        return null;
+    }
+
+    // ---------------------------------------------------------------
     // Helpers
     // ---------------------------------------------------------------
 
@@ -131,6 +211,21 @@ public class StudentLinkedList {
 
     public int size() {
         return size;
+    }
+
+    /**
+     * Copies all students into an array (in list order).
+     * Useful for other members, e.g. rebuilding the BST or hash table.
+     */
+    public Student[] toArray() {
+        Student[] students = new Student[size];
+        Node current = head;
+        int index = 0;
+        while (current != null) {
+            students[index++] = current.data;
+            current = current.next;
+        }
+        return students;
     }
 
     // ---------------------------------------------------------------
