@@ -18,10 +18,10 @@ java -cp ../out Main
 
 | Member | Name | Student ID | Responsibility |
 |---|---|---|---|
-| Member 1 | _[Name]_ | _[Student ID]_ | Linked list implementation and student-record management |
-| Member 2 | _[Name]_ | _[Student ID]_ | Stack and queue implementation and related operations |
-| Member 3 | _[Name]_ | _[Student ID]_ | BST/AVL tree implementation and hashing/search functionality |
-| Member 4 | _[Name]_ | _[Student ID]_ | Graph implementation, campus locations, connections and BFS/DFS traversal |
+| Member 1 | HMM. Thasneem | 23DA2-0473 | Linked list implementation and student-record management |
+| Member 2 | sawra | 23da2-0605 | Stack and queue implementation and related operations |
+| Member 3 |  | _[Student ID]_ | BST/AVL tree implementation and hashing/search functionality |
+| Member 4 | A.Maryam Amani | 23da2-0857 | Graph implementation, campus locations, connections and BFS/DFS traversal |
 
 ## Individual Contributions
 
